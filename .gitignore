@@ -11,7 +11,9 @@
 /client/build
 
 # misc
-/server/config/config.env
+
+/server/node_modules
+/server/.env
 /client/.DS_Store
 /client/.env.local
 /client/.env.development.local
