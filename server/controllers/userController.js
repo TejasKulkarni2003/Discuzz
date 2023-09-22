@@ -124,7 +124,6 @@ exports.deleteuser = asyncError(async(req,res)=>{
 })
 
 // update user
-
 exports.updateUser = asyncError(async(req,res)=>{
     const {id} = req.params;
     const { firstname, email, mobile, gender, status } = req.body;
