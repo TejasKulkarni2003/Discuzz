@@ -32,7 +32,7 @@ exports.loginUser = asyncError(async (req, res, next) => {
         return res.status(400).json({ error: "Email and password are required" });
     }
 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({email}).select("+password");
 
     if (!user) {
         return res.status(401).json({ error: "Invalid credentials" });
@@ -138,4 +138,36 @@ exports.updateUser = asyncError(async(req,res)=>{
 
     res.status(200).json(updateUserdata)
     
+})
+
+//change password
+
+exports.changePassword = asyncError(async(req, res, next) => {
+    const {password, newPassword, confirmPassword} = req.body
+    const user = await User.findById(req.user.id).select("+password");
+
+    const isPasswordMatch = await user.comparePasswords(password);
+
+    if(!isPasswordMatch){
+        return res.status(401).json({
+            success: false,
+            message: "Invalid Password"
+        })
+    }
+
+    if(newPassword !== confirmPassword){
+        return res.status(404).json({
+            success: false,
+            message: "Invalid Credentials"
+        })
+    }
+
+    user.password = newPassword;
+    await user.save({validateBeforeSave: false});
+
+    res.status(200).json({
+        success: true,
+        message: "Password Changed Successfully",
+        user
+    })
 })
