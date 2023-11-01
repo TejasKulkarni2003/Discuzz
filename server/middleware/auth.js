@@ -1,16 +1,17 @@
 const asyncError = require("./asyncError");
 const User = require("../models/userSchema")
 const jwt = require("jsonwebtoken")
-exports.isLoggedIn = asyncError( async (req, res, next) => {
-    const {token} = req.cookies
+
+exports.isAuthenticatedUser = asyncError(async (req, res, next) =>{
+    const {token} = req.cookies;
+    // console.log(token);
     if(!token){
-        return res.status(401).json({
-            message: "Please login First",
-        })
+        return next(res.status(500).json({message: "Please Login First"}));
     }
 
-    const decodedToken = await jwt.verify(token, process.env.JWT_SECRET)
+    const data = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = await User.findById(decodedToken._id);
-    next()
+    req.user = await User.findById(data.id);
+
+    next();
 })
