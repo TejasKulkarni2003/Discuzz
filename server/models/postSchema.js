@@ -1,8 +1,14 @@
 const mongoose = require("mongoose")
 
 const PostSchema = mongoose.Schema({
-    title: String,
-    content: String,
+    title: {
+        type: String,
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
     creator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -10,7 +16,10 @@ const PostSchema = mongoose.Schema({
     // categories:[
     //     {category: String}
     // ],
-    category: String,
+    category: {
+        type: String,
+        required: true
+    },
     likes:[
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -33,7 +42,7 @@ const PostSchema = mongoose.Schema({
         }
     ],
 
-    reports: Int,
+    // reports: Int,
 
     createdAt:{
         type: Date,

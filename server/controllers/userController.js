@@ -6,7 +6,7 @@ const sendToken = require("../utils/sendJWTToken");
 // create user
 exports.register = asyncError(async (req, res) => {
     const { firstname, email, mobile, gender, status, password} = req.body;
-    console.log(firstname);
+    // console.log(firstname);
     if (!firstname || !email || !mobile || !gender || !status || !password ) {
         return res.status(400).json({ error: "All Input Is required" });
     }
@@ -57,7 +57,7 @@ exports.loginUser = asyncError(async (req, res, next) => {
 //logout
 exports.logout = asyncError((req, res, next) => {
     try {
-        console.log(res.cookie)
+        // console.log(res.cookie)
         res.cookie('token', null, {
             expires: new Date(Date.now()),
             httpOnly: true
