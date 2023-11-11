@@ -73,6 +73,19 @@ exports.logout = asyncError((req, res, next) => {
     
 })
 
+//get user
+exports.getUserDetails = asyncError(async(req, res) => {
+    try {
+        const user = await User.findById(req.user._id)
+        res.status(200).json({
+            success: true,
+            user,
+        })
+    } catch (error) {
+        res.status(501).json({ error: error });
+    }
+})
+
 // get all User
 exports.getAllUsers = asyncError(async(req,res)=>{
     try {
