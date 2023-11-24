@@ -1,0 +1,26 @@
+.userHead{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.photo{
+    width: 5rem;
+    height: 5rem;
+}
+.details{
+    justify-content: start;
+}
+.userId{
+    font-size: 0.7rem;
+}
+.postdiv{
+    /* border: 2px solid; */
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.subHeading{
+    text-align: center;
+}

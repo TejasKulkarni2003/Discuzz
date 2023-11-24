@@ -5,9 +5,9 @@ const sendToken = require("../utils/sendJWTToken");
 
 // create user
 exports.register = asyncError(async (req, res) => {
-    const { firstname, email, mobile, gender, status, password} = req.body;
+    const { firstname, email, mobile, gender, password} = req.body;
     // console.log(firstname);
-    if (!firstname || !email || !mobile || !gender || !status || !password ) {
+    if (!firstname || !email || !mobile || !gender  || !password ) {
         return res.status(400).json({ error: "All Input Is required" });
     }
     
@@ -17,7 +17,7 @@ exports.register = asyncError(async (req, res) => {
     } 
 
     const user = await User.create({
-        firstname, email, mobile, gender, status , password
+        firstname, email, mobile, gender , password
     });
     sendToken(user, 201, res);
 
@@ -28,6 +28,7 @@ exports.register = asyncError(async (req, res) => {
 exports.loginUser = asyncError(async (req, res, next) => {
     try {
         const { email, password } = req.body;
+        // console.log(email, password)
 
         if (!email || !password) {
             return res.status(400).json({ error: "Email and password are required" });
@@ -135,7 +136,7 @@ exports.getSingleuser = asyncError(async(req,res)=>{
     try {
         const {id} = req.params;
 
-        const singleUserData = await User.findOne({_id:id});
+        const singleUserData = await User.findOne({_id:id}).populate("posts");
         res.status(200).json(singleUserData);
     } catch (error) {
         res.status(501).json({ error: error });

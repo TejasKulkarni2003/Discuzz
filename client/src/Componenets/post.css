@@ -1,0 +1,18 @@
+.post{
+    color: black;
+    width: 25rem;
+    border: 1px solid #423F8F;
+    height: fit-content;
+    margin: 1rem 0rem;
+    padding: 0.5rem 2rem;
+}
+
+button{
+    padding: 1rem;
+    background: none;
+	color: inherit;
+	border: none;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}

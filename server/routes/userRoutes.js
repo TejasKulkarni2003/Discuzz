@@ -19,7 +19,7 @@ router.route("/user/deleteuser/:id").delete(deleteuser);
 router.route("/user/updateuser/:id").put( updateUser);
 
 // login route
-router.route("/user/login").post(loginUser);
+router.route("/login").post(loginUser);
 
 //logout
 router.route("/logout").get(logout);

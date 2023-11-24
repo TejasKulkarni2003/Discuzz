@@ -1,0 +1,33 @@
+.sidebar{
+    position: fixed;
+    margin-top: 3.5rem;
+    z-index: 4;
+    width: 20%;
+    background-color: #A5A3D2;
+    height: 100%;
+}
+
+.categories{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    text-decoration: none;
+    /* border-bottom: 1px solid #fff; */
+    transition: 0.2s;
+}
+
+.svg2{
+    width: 1.7rem;
+    height: 1.7rem;
+    color: #000;
+}
+
+p{
+    padding: 0rem 0.8rem;
+    color: #010035;
+    text-decoration: none;
+}
+
+.categories:hover{
+    transform: scale(1.05);
+}

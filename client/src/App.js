@@ -1,24 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from "./Componenets/Navbar.js"
+import Home from "./Componenets/Home.js"
+import Login from "./Componenets/Login.js"
+import Register from "./Componenets/Register.js"
+import ChangePassword from "./Componenets/ChangePassword.js"
+import UserProfile from "./Componenets/UserProfile.js"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from 'react';
+import { loadUser } from './Actions/userActions';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
+  
+  const { isAuthenticated } = useSelector((state) => state.user);
+  // console.log(isAuthenticated);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        {isAuthenticated && <Navbar />}
+        <Routes>
+
+          <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/resetpassword" element={<ChangePassword />} />
+          <Route path="/user/:id" element={<UserProfile />} />
+
+        </Routes>
+
+
+
+
+
+
+      </BrowserRouter>
+
+    </>
   );
 }
 

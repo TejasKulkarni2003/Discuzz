@@ -35,7 +35,7 @@ exports.createPost = asyncError (async(req, res, next) => {
 
 exports.getPosts = asyncError ( async(req, res, next) => {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find().populate("creator likes comments.user");
         res.status(200).json({success: true, posts})
     } catch (error) {
         res.status(500).json({success: false, message: error.message})
