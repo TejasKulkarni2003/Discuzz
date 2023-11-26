@@ -15,6 +15,8 @@ const UserProfile = () => {
         dispatch(loadSingleUser(id))
     }, [])
 
+    const {loading, userProfile, error} = useSelector((state)=>state.userProfile)
+
     
     
 
@@ -28,32 +30,48 @@ const UserProfile = () => {
     
   return (
     <>
-        <div className='userHead'>
-            <div className='photo'>
-                <UserCircle2 className='photo'/>
-            </div>
-            <div className='details'>
-                <h3 className='userId'>User: Name</h3>
-                <h3>User: Name</h3>
-                <h3>User: Email</h3>
-                <h3>User: Number</h3>
-                <h3>User: Gender</h3>
-            </div>
-        </div>
-        <div className='postdiv'>
-            <h2 className='subHeading'>Posts</h2>
+    {
+        loading ? <div style={{"fontSize": "120px"}}>Loading</div> : userProfile &&
+        (
+            <>
+                <div className="profile">
+                <div className='userHead'>
+                    <div className='photo'>
+                        <UserCircle2 className='photo'/>
+                    </div>
+                    <div className='details'>
+                        <h3 className='userId'>User: {userProfile._id}</h3>
+                        <h3>Name: {userProfile.firstname}</h3>
+                        <h3>Email: {userProfile.email}</h3>
+                        <h3>Number: {userProfile.mobile}</h3>
+                        <h3>Gender: {userProfile.gender}</h3>
+                    </div>
+                </div>
+                <div className='postdiv'>
                     
-            <div className='subdiv' key={id}>
-                <Post post = {item}/>
-                <Post post = {item}/>
-                <Post post = {item}/>
-                <Post post = {item}/>
-                <Post post = {item}/>
-                <Post post = {item}/>
-                <Post post = {item}/>
-            </div>
+                            
+                    <div className='subdiv' key={id}>
+                    {
+                        userProfile.posts  && userProfile.posts.length === 0 ? <h2>No Posts</h2> :
+                        <>
+                        <h2 className='subHeading'>Posts</h2>
+                       { userProfile.posts.map((item, id)=>
+                            
+                            <div className='subdiv' key={id}>
+                                <Post post={item}/>
+                            </div>
+                        )}
+                        </>
+                        
+                    }
+                    </div>
+                
+                </div>
+                </div>
+            </>
+        )
+    }
         
-        </div>
     </>
   )
 }

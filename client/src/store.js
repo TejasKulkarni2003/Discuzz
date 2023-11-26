@@ -1,15 +1,21 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { likePostReducer } from "./Reducers/postReducer";
-import {  getAllPostsReducer, getAllUsersReducer, userProfileReducer, userReducer } from "./Reducers/userReducer";
+import { applyMiddleware, combineReducers, legacy_createStore as createStore } from "redux";
+import thunk from "redux-thunk"
+import{ composeWithDevTools} from "redux-devtools-extension"
+import { getAllPostsReducer, userProfileReducer, userReducer } from "./Reducers/userReducer";
 
-const store = configureStore({
-    reducer:{
-        user: userReducer,
-        allPosts: getAllPostsReducer,
-        allUsers: getAllUsersReducer,
-        like: likePostReducer,
-        userProfile: userProfileReducer,
-    }
-})
+
+const reducer = combineReducers({
+    user: userReducer,
+    allPosts: getAllPostsReducer,
+    userProfile: userProfileReducer,
+});
+
+
+const middleware = [thunk];
+
+const store = createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(...middleware))
+);
 
 export default store;

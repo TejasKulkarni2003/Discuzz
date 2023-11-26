@@ -27,17 +27,12 @@ function App() {
         <Routes>
 
           <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={isAuthenticated ? <Home /> :<Login />} />
+          <Route path="/register" element={isAuthenticated ? <Home /> : <Register />} />
           <Route path="/resetpassword" element={<ChangePassword />} />
           <Route path="/user/:id" element={<UserProfile />} />
 
         </Routes>
-
-
-
-
-
 
       </BrowserRouter>
 

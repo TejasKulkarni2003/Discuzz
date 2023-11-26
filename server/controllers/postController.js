@@ -45,7 +45,6 @@ exports.getPosts = asyncError ( async(req, res, next) => {
 exports.likeUnlikePost = asyncError( async(req, res, next) => {
     try {
         const currentPost = await Post.findById(req.params.id)
-        // const currentUser = await User.findById(req.user._id)
 
         if(!currentPost){
             return res.status(404).json({success: false, message: "Post not found"})
@@ -86,7 +85,6 @@ exports.deletePost = asyncError( async(req, res, next) => {
         }
 
         await Post.findByIdAndDelete(req.params.id)
-        // console.log(user)
         const index = user.posts.indexOf(req.params.id)
         
         user.posts.splice(index, 1)

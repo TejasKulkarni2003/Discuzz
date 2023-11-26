@@ -136,7 +136,7 @@ exports.getSingleuser = asyncError(async(req,res)=>{
     try {
         const {id} = req.params;
 
-        const singleUserData = await User.findOne({_id:id}).populate("posts");
+        const singleUserData = await User.findOne({_id:id}).populate("posts posts.creator");
         res.status(200).json(singleUserData);
     } catch (error) {
         res.status(501).json({ error: error });

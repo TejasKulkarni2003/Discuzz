@@ -3,7 +3,7 @@ import React from 'react'
 import "./post.css"
 
 const Post = (post) => {
-  console.log(post.post.post);
+  // console.log(post);
   return (
     <div className='post'>
         <h3>{post.post.creator.firstname}</h3>

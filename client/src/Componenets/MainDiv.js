@@ -7,7 +7,7 @@ import { getAllPosts } from '../Actions/userActions'
 const MainDiv = () => {
     const dispatch = useDispatch();
     const {loading, posts} = useSelector((state)=>state.allPosts)
-    console.log(posts);
+    // console.log(posts);
 
   return (
     <>

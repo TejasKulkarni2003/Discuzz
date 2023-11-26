@@ -19,6 +19,10 @@ const Login = () => {
         dispatch(loginUser(email, password))
     }
 
+    const newUSerHandler = () =>{
+        navigate("/register")
+    }
+
   return (
     <div className='formContainer'>
         <div className='formBox'>   
@@ -46,6 +50,8 @@ const Login = () => {
                 </div>
 
                 <input type="submit" value="Login" className='loginBtn' />
+                <input type="button" value="register" className='loginBtn' onClick={newUSerHandler} />
+
             </form>
         </div>
     </div>

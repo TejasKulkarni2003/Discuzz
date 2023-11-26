@@ -1,9 +1,20 @@
+import {USER_LOGIN_REQUEST, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS,
+  USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST,
+  LOAD_SUCCESS, LOAD_FAIL, LOAD_REQUEST,
+  LOGOUT_SUCCESS, LOGOUT_FAIL,
+  UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_FAIL,
+  UPDATE_PASSWORD_SUCCESS, UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD_FAIL,
+  GET_ALL_POST_FAIL, GET_ALL_POST_REQUEST, GET_ALL_POST_SUCCESS,
+  ClearErrors,
+  USER_PROFILE_REQUEST,
+  USER_PROFILE_SUCCESS,
+  USER_PROFILE_FAIL} from "../Constants/userConstants"
 import axios from "axios";
 
 export const loginUser = (email, password) => async (dispatch) => {
     try {
       dispatch({
-        type: "LoginRequest",
+        type: USER_LOGIN_REQUEST,
       });
   
       const { data } = await axios.post(
@@ -17,12 +28,13 @@ export const loginUser = (email, password) => async (dispatch) => {
       );
   
       dispatch({
-        type: "LoginSuccess",
+        type: USER_LOGIN_SUCCESS,
         payload: data.user,
       });
     } catch (error) {
+      console.log(error);
       dispatch({
-        type: "LoginFailure",
+        type: USER_LOGIN_FAIL,
         payload: error.response.data.message,
       });
     }
@@ -30,17 +42,18 @@ export const loginUser = (email, password) => async (dispatch) => {
 
 export const loadUser = () => async(dispatch) => {
     try {
-        dispatch({type: "LoadRequest"})
+        dispatch({type: LOAD_REQUEST})
 
         const {data} = await axios.get("/api/v1/profile")
+        // console.log(data);
 
         dispatch({
-            type: "LoadSuccess",
+            type: LOAD_SUCCESS,
             payload: data.user,
         })
     } catch (error) {
         dispatch({
-            type: "LoadFailure",
+            type: LOAD_FAIL,
             payload: error.response.data.message,
         })
     }
@@ -48,17 +61,17 @@ export const loadUser = () => async(dispatch) => {
 
 export const loadSingleUser = (id) => async(dispatch) => {
   try {
-      dispatch({type: "LoadUserRequest"})
+      dispatch({type: USER_PROFILE_REQUEST})
 
       const {data} = await axios.get(`/api/v1/user/details/${id}`)
 
       dispatch({
-          type: "LoadUserSuccess",
+          type: USER_PROFILE_SUCCESS,
           payload: data,
       })
   } catch (error) {
       dispatch({
-          type: "LoadUserFailure",
+          type: USER_PROFILE_FAIL,
           payload: error.response.data.message,
       })
   }
@@ -66,17 +79,17 @@ export const loadSingleUser = (id) => async(dispatch) => {
 
 export const getAllPosts = () => async(dispatch) => {
     try {
-        dispatch({type: "getAllPostsRequest"})
+        dispatch({type: GET_ALL_POST_REQUEST})
 
         const {data} = await axios.get("/api/v1/posts")
 
         dispatch({
-            type: "getAllPostsSuccess",
+            type: GET_ALL_POST_SUCCESS,
             payload: data.posts,
         })
     } catch (error) {
         dispatch({
-            type: "getAllPostsFail",
+            type: GET_ALL_POST_FAIL,
             payload: error.response.data.message,
         })
     }
@@ -103,7 +116,7 @@ export const getAllUsers = () => async(dispatch) => {
 export const registerUser = (userData) => async (dispatch) => {
   try {
     dispatch({
-      type: "RegisterRequest",
+      type: USER_REGISTER_REQUEST,
     });
 
     const { data } = await axios.post(
@@ -117,12 +130,12 @@ export const registerUser = (userData) => async (dispatch) => {
     );
 
     dispatch({
-      type: "RegisterSuccess",
+      type: USER_REGISTER_SUCCESS,
       payload: data.user,
     });
   } catch (error) {
     dispatch({
-      type: "RegisterFailure",
+      type: USER_REGISTER_FAIL,
       payload: error.response.data.message,
     });
   }
