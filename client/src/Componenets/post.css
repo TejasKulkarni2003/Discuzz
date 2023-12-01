@@ -6,7 +6,10 @@
     margin: 1rem 0rem;
     padding: 0.5rem 2rem;
 }
-
+.post > div{
+    display: flex;
+    justify-content: space-between;
+}
 button{
     padding: 1rem;
     background: none;
@@ -15,4 +18,39 @@ button{
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+
+.commentBox{
+    width: 30vw;
+}
+
+.addComment{
+    display: flex;
+}
+
+.addComment >input{
+    border-radius: 2rem 0 0 2rem;
+}
+
+.sendBtn{
+    background: #010035;
+    color: aliceblue;
+    border-radius: 0 2rem 2rem 0;
+}
+
+.sendBtn:hover{
+    background: #423F8F;
+}
+
+.commentDiv{
+    margin: 2rem ;
+    border-bottom: 1px solid #423F8F;
+}
+.commentUser{
+    color: rgba(0, 0, 0, 0.471);
+    font-style: italic;
+}
+.commentData{
+    color: black;
+    font-style: bold;
 }

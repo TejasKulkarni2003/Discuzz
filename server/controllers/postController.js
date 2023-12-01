@@ -26,7 +26,7 @@ exports.createPost = asyncError (async(req, res, next) => {
 
         await user.save()
 
-        res.status(200).json({success: true, newPost})
+        res.status(200).json({success: true, message: "Post Uploaded Successfully", newPost})
 
     } catch (error) {
         res.status(500).json({success: false, message: error.message})
@@ -124,3 +124,31 @@ exports.addToFavourites = asyncError( async(req, res, next) => {
         res.status(500).json({success: false, message: error.message})
     }
 })
+
+exports.addComment = asyncError( async(req, res, next) => {
+    try {
+
+        const post = await Post.findById(req.params.id)
+        if(!post){
+            return res.status(404).json({success: false, message: "Post not found"})
+        }
+
+        const {comment} = req.body
+        const newComment = {
+            user: req.user._id,
+            comment,
+        }
+
+        post.comments.push(newComment)
+        await post.save()
+
+        res.status(201).json({
+            success: true,
+            message: "Comment Added Successfully",
+        })
+
+
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    }
+} )

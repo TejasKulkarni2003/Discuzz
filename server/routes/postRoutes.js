@@ -1,5 +1,5 @@
 const express = require("express");
-const { createPost, getPosts, likeUnlikePost, deletePost, addToFavourites } = require("../controllers/postController");
+const { createPost, getPosts, likeUnlikePost, deletePost, addToFavourites, addComment } = require("../controllers/postController");
 const router = express.Router();
 const {isAuthenticatedUser} = require("../middleware/auth")
 
@@ -11,6 +11,7 @@ router.route("/posts").get(isAuthenticatedUser, getPosts);
 
 //like Unlike Post  &  delete Post
 router.route("/post/:id").get(isAuthenticatedUser, likeUnlikePost).delete(isAuthenticatedUser, deletePost);
+router.route("/post/comment/:id").post(isAuthenticatedUser, addComment);
 
 //add and remove from favourites
 router.route("/post/addtofav/:id").get(isAuthenticatedUser, addToFavourites);

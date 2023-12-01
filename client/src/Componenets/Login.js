@@ -50,7 +50,7 @@ const Login = () => {
                 </div>
 
                 <input type="submit" value="Login" className='loginBtn' />
-                <input type="button" value="register" className='loginBtn' onClick={newUSerHandler} />
+                <input type="button" value="Register" className='loginBtn' onClick={newUSerHandler} />
 
             </form>
         </div>

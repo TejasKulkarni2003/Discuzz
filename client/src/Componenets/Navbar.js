@@ -11,7 +11,7 @@ const Navbar = () => {
             <Link to="/">
                 <Home className='svg'/>
             </Link>
-            <Link to="/newpost">
+            <Link to="/create">
                 <PlusCircle className='svg'/>
             </Link>
             <Link to="/search">

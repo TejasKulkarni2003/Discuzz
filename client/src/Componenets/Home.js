@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <>
     {
-      loading===true ? (<div style={{"fontSize": "120px"}}>loading</div>): (
+      loading===true ? (<div className='loader'></div>): (
         <div className='containerMain'>
             <SideBar/>
             <MainDiv/>

@@ -6,8 +6,9 @@ import { useParams } from 'react-router-dom'
 import { loadSingleUser, logout } from '../Actions/userActions';
 import Post from './Post';
 
-const UserProfile = () => {
-    const {id} = useParams();
+const Profile = () => {
+    const {user} = useSelector((state)=>state.user)
+    const id = user._id
     // console.log(id);
     const dispatch = useDispatch()
 
@@ -70,4 +71,4 @@ const UserProfile = () => {
   )
 }
 
-export default UserProfile
+export default Profile
