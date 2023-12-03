@@ -1,0 +1,30 @@
+.m3{
+    display: flex;
+    justify-content: center;
+   
+}
+.searchDiv{
+    margin-top: 5rem;
+}
+.searchBox{
+    display: flex;
+    width: 35vw;
+}
+
+.addComment{
+    display: flex;
+}
+
+.searchBox >input{
+    border-radius: 2rem 0 0 2rem;
+}
+
+.sendBtn{
+    background: #010035;
+    color: aliceblue;
+    border-radius: 0 2rem 2rem 0;
+}
+
+.sendBtn:hover{
+    background: #423F8F;
+}

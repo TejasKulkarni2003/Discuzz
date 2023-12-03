@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ADD_TO_FAVOURITES_FAIL, ADD_TO_FAVOURITES_REQUEST, ADD_TO_FAVOURITES_SUCCESS, COMMENT_FAIL, COMMENT_REQUEST, COMMENT_SUCCESS,
+import { ADD_TO_FAVOURITES_FAIL, ADD_TO_FAVOURITES_REQUEST, ADD_TO_FAVOURITES_SUCCESS, ClearErrors, ClearMessages, COMMENT_FAIL, COMMENT_REQUEST, COMMENT_SUCCESS,
      CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS,
      GET_POSTS_FAIL,
      GET_POSTS_REQUEST,
@@ -91,8 +91,9 @@ export const addToFav = (id) => async(dispatch) => {
 export const getPosts = (category) => async(dispatch) => {
     try {
         dispatch({type: GET_POSTS_REQUEST})
-
+        // console.log(category);
         const {data} = await axios.get(`/api/v1/posts/${category}`)
+        // console.log(`/api/v1/posts/${category}`);
 
         dispatch({
             type: GET_POSTS_SUCCESS,
@@ -104,4 +105,12 @@ export const getPosts = (category) => async(dispatch) => {
             payload: error.response.data.message,
         })
     }
+}
+
+export const clearErrors = () => async (dispatch) => {
+    dispatch({type: ClearErrors})
+}
+
+export const clearMessages = () => async (dispatch) => {
+    dispatch({type: ClearMessages})
 }

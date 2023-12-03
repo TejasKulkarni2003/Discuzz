@@ -5,12 +5,12 @@
     align-items: center;
 }
 .photo{
-    margin-top: 2rem;
+    margin-top: 8vh;
     width: 5rem;
     height: 5rem;
 }
 .details{
-    margin-top: 2rem;
+    margin-top: 8vh;
     justify-content: start;
 }
 .userId{

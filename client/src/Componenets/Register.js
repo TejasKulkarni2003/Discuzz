@@ -1,18 +1,23 @@
 import { Ghost, Key, Mail, Phone, UserCircle } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { loginUser, registerUser } from '../Actions/userActions'
+import { clearErrors } from '../Actions/postActions'
+import { loadUser, registerUser } from '../Actions/userActions'
 import "./Login.css"
 
-const Login = () => {
+const Register = () => {
     const dispatch = useDispatch()
     const navigate =  useNavigate()
+    const alert = useAlert()
     const [email, setEmail] = useState("")
     const [firstname, setfirstname] = useState("")
     const [mobile, setMobile] = useState("")
     const [gender, setGender] = useState("")
     const [password, setPassword] = useState("")
+
+    const {error} = useSelector((state)=>state.user)
 
     const registerHandler = (e) =>{
         e.preventDefault()
@@ -25,7 +30,18 @@ const Login = () => {
         }
 
         dispatch(registerUser(userData))
+        dispatch(loadUser())
     }
+
+    useEffect(() => {
+        if(error){
+            alert.show(error, {
+                type:'error'
+            })
+            dispatch(clearErrors());
+        }
+        
+    }, [dispatch, error, alert])
 
   return (
     <div className='formContainer'>
@@ -90,4 +106,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register

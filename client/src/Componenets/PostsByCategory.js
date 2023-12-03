@@ -6,17 +6,19 @@ import { getAllPosts } from '../Actions/userActions'
 import { useParams } from 'react-router-dom'
 import { getPosts } from '../Actions/postActions.js'
 
-const Home = () => {
+const PostsByCategory = () => {
     const dispatch = useDispatch();
     const {loading, error} = useSelector((state)=>state.allPosts)
     const {category} = useParams()
+    
     useEffect(() => {
       if(error){
         console.log(error);
       }
+      // console.log(category);
       dispatch(getPosts(category))
 
-    }, [dispatch, error])
+    }, [dispatch, error, category])
   return (
     <>
     {
@@ -32,4 +34,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default PostsByCategory

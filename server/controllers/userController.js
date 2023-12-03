@@ -8,19 +8,22 @@ exports.register = asyncError(async (req, res) => {
     const { firstname, email, mobile, gender, password} = req.body;
     // console.log(firstname);
     if (!firstname || !email || !mobile || !gender  || !password ) {
-        return res.status(400).json({ error: "All Input Is required" });
+        return res.status(400).json({ message: "All Input Is required" });
     }
     
     const preuser = await User.findOne({ email: email })
     if (preuser) {
-        return res.status(400).json({ error: "This user already exist in our databse" });
+        return res.status(400).json({ message: "This user already exist in our databse" });
     } 
-
-    const user = await User.create({
-        firstname, email, mobile, gender , password
-    });
-    sendToken(user, 201, res);
-
+    try {
+        const user = await User.create({
+            firstname, email, mobile, gender , password
+        });
+        sendToken(user, 201, res);
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+    
 });
 
 
@@ -31,25 +34,25 @@ exports.loginUser = asyncError(async (req, res, next) => {
         // console.log(email, password)
 
         if (!email || !password) {
-            return res.status(400).json({ error: "Email and password are required" });
+            return res.status(400).json({ message: "Email and password are required" });
         }
 
         const user = await User.findOne({ email }).select("+password");
 
         if (!user) {
-            return res.status(401).json({ error: "Invalid credentials" });
+            return res.status(401).json({ message: "Invalid credentials" });
         }
 
         const isPasswordMatch = await user.comparePasswords(password);
 
         if (!isPasswordMatch) {
-            return res.status(401).json({ error: "Invalid credentials" });
+            return res.status(401).json({ message: "Invalid credentials" });
         }
 
 
         sendToken(user, 200, res);
     } catch (error) {
-        res.status(501).json({ error: error });
+        res.status(501).json({ message: error });
     }
     
     
@@ -136,7 +139,7 @@ exports.getSingleuser = asyncError(async(req,res)=>{
     try {
         const {id} = req.params;
 
-        const singleUserData = await User.findOne({_id:id}).populate("posts posts.creator");
+        const singleUserData = await User.findOne({_id:id}).populate({path:'posts', populate: {path: 'likes creator comments comments.user'}});
         res.status(200).json(singleUserData);
     } catch (error) {
         res.status(501).json({ error: error });

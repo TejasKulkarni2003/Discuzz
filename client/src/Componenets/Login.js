@@ -1,27 +1,37 @@
 import { Key, Mail } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { loginUser } from '../Actions/userActions'
+import { clearErrors, loginUser } from '../Actions/userActions'
 import "./Login.css"
 
 const Login = () => {
     const dispatch = useDispatch()
     const navigate =  useNavigate()
+    const alert = useAlert()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    const {error} = useSelector((state)=>state.user)
+
     const loginFormHandler = (e) =>{
         e.preventDefault()
-        // console.log(email)
-        // console.log(password)
-
         dispatch(loginUser(email, password))
     }
 
     const newUSerHandler = () =>{
         navigate("/register")
     }
+
+    useEffect(() => {
+        if(error){
+            alert.show(error, {
+                type:'error'
+            })
+        }
+        dispatch(clearErrors());
+    }, [dispatch, error, alert])
 
   return (
     <div className='formContainer'>

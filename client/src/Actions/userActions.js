@@ -8,7 +8,8 @@ import {USER_LOGIN_REQUEST, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS,
   ClearErrors,
   USER_PROFILE_REQUEST,
   USER_PROFILE_SUCCESS,
-  USER_PROFILE_FAIL} from "../Constants/userConstants"
+  USER_PROFILE_FAIL,
+  } from "../Constants/userConstants"
 import axios from "axios";
 
 export const loginUser = (email, password) => async (dispatch) => {
@@ -64,6 +65,7 @@ export const loadSingleUser = (id) => async(dispatch) => {
       dispatch({type: USER_PROFILE_REQUEST})
 
       const {data} = await axios.get(`/api/v1/user/details/${id}`)
+      data.posts = data.posts.reverse()
 
       dispatch({
           type: USER_PROFILE_SUCCESS,
@@ -77,11 +79,11 @@ export const loadSingleUser = (id) => async(dispatch) => {
   }
 }
 
-export const getAllPosts = () => async(dispatch) => {
+export const getAllPosts = (keyword="") => async(dispatch) => {
     try {
         dispatch({type: GET_ALL_POST_REQUEST})
 
-        const {data} = await axios.get("/api/v1/posts")
+        const {data} = await axios.get(`/api/v1/posts?keyword=${keyword}`)
 
         dispatch({
             type: GET_ALL_POST_SUCCESS,
@@ -118,7 +120,7 @@ export const registerUser = (userData) => async (dispatch) => {
     dispatch({
       type: USER_REGISTER_REQUEST,
     });
-
+    
     const { data } = await axios.post(
       "/api/v1/register",
       userData,
@@ -152,4 +154,8 @@ export const logout = () => async(dispatch) => {
           payload: error.response.data.message,
       })
   }
+}
+
+export const clearErrors = () => async (dispatch) => {
+  dispatch({type: ClearErrors})
 }

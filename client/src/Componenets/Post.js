@@ -9,7 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { getAllPosts, loadUser } from '../Actions/userActions'
+import { getAllPosts, loadSingleUser, loadUser } from '../Actions/userActions'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -21,40 +21,33 @@ const Post = (post) => {
   // console.log(post);
   const dispatch = useDispatch();
   const {user} = useSelector((state)=>state.user)
-  const {message: likemessage} = useSelector((state)=>state.like)
-  const {message: commentmessage} = useSelector((state)=>state.comment)
-  const {message: favouritesmessage} = useSelector((state)=>state.addToFav)
+  
   const [likedornot, setlikedornot] = useState(false)
   const [favouriteOrNot, setfavouriteOrNot] = useState(false)
   const [comment, setComment] = useState("")
 
-  const alert = useAlert()
+  
 
   const likeHandler = async() => {
     await dispatch(likePost(post.post._id))
-    alert.show(likemessage, {
-      type:'success'
-    })
+    dispatch(getAllPosts())
     setlikedornot(!likedornot)
   }
 
   const addCommentHandler = async(e) => {
     e.preventDefault()
     await dispatch(addComment(post.post._id, comment))
-    alert.show(commentmessage, {
-      type:'success'
-    })
+    setOpen(false)
     dispatch(getAllPosts())
     dispatch(getPosts(""))
+    dispatch(loadSingleUser(post.post.creator._id))
 
   }
 
-  const addBookmark = () => {
-    dispatch(addToFav(post.post._id))
+  const addBookmark = async() => {
+    await dispatch(addToFav(post.post._id))
     setfavouriteOrNot(!favouriteOrNot)
-    alert.show(favouritesmessage, {
-      type:'success'
-    })
+    setOpen(false)
     dispatch(loadUser())
   }
 
@@ -78,18 +71,19 @@ const Post = (post) => {
   }, [open]);
   
   useEffect(() => {
-    if(post.post.likes.includes(user)){
-      setlikedornot(true)
-    }
     for (let i = 0; i < post.post.likes.length; i++) {
       if(post.post.likes[i]._id === user._id){
         setlikedornot(true)
       }
     }
-    if(user.favouritePosts.includes(post.post._id)){
-      setfavouriteOrNot(true)
+
+    for (let i = 0; i < user.favouritePosts.length; i++) {
+      if(user.favouritePosts[i] === post.post._id){
+        setfavouriteOrNot(true)
+      }
     }
-  }, [dispatch])
+    
+  }, [dispatch, user, post])
 
   return (
     <div className='post'>

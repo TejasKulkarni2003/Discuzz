@@ -38,7 +38,6 @@ const UserProfile = () => {
                         <h3>Email: {userProfile.email}</h3>
                         <h3>Number: {userProfile.mobile}</h3>
                         <h3>Gender: {userProfile.gender}</h3>
-                        <button className='loginBtn' onClick={logoutHandler}>Logout</button>
                     </div>
                 </div>
                 <div className='postdiv'>

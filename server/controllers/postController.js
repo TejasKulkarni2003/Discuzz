@@ -1,6 +1,7 @@
 const Post = require("../models/postSchema")
 const User=require("../models/userSchema")
 const asyncError = require("../middleware/asyncError")
+const ApiFeatures = require("../utils/apifeatures")
 // const {} = require("../middleware/auth")
 
 exports.createPost = asyncError (async(req, res, next) => {
@@ -37,8 +38,9 @@ exports.createPost = asyncError (async(req, res, next) => {
 
 exports.getPosts = asyncError ( async(req, res, next) => {
     try {
-        const posts = await Post.find().populate("creator likes comments.user");
-        res.status(200).json({success: true, posts})
+        const apifeatures = new ApiFeatures(Post.find(), req.query).search()
+        const posts = await apifeatures.query.clone();
+        res.status(200).json({success: true, posts: posts.reverse()})
     } catch (error) {
         res.status(500).json({success: false, message: error.message})
     }
@@ -48,7 +50,7 @@ exports.getPostsByCategory = asyncError ( async(req, res, next) => {
     try {
         const {category} = req.params
         const posts = await Post.find({category: category}).populate("creator likes comments.user");
-        res.status(200).json({success: true, posts})
+        res.status(200).json({success: true, posts: posts.reverse()})
     } catch (error) {
         res.status(500).json({success: false, message: error.message})
     }

@@ -21,7 +21,7 @@
 //     }
 // })
 
-import { ADD_TO_FAVOURITES_FAIL, ADD_TO_FAVOURITES_REQUEST, ADD_TO_FAVOURITES_SUCCESS, COMMENT_FAIL, COMMENT_REQUEST, COMMENT_SUCCESS,
+import { ADD_TO_FAVOURITES_FAIL, ADD_TO_FAVOURITES_REQUEST, ADD_TO_FAVOURITES_SUCCESS, ClearErrors, ClearMessages, COMMENT_FAIL, COMMENT_REQUEST, COMMENT_SUCCESS,
          CREATE_POST_FAIL,
          CREATE_POST_REQUEST,
          CREATE_POST_SUCCESS,
@@ -50,6 +50,16 @@ export const likeReducer = (state = {}, action) => {
                 loading: false,
                 error: action.payload
             };
+        case ClearErrors:
+            return{
+                ...state,
+                error: null,
+            };
+        case ClearMessages:
+            return{
+                ...state,
+                message: null,
+            };
         default:
             return state;
 
@@ -75,6 +85,16 @@ export const commentReducer = (state = {}, action) => {
                 ...state,
                 loading: false,
                 error: action.payload
+            };
+        case ClearErrors:
+            return{
+                ...state,
+                error: null,
+            };
+        case ClearMessages:
+            return{
+                ...state,
+                message: null,
             };
         default:
             return state;
@@ -102,6 +122,16 @@ export const createPostReducer = (state = {}, action) => {
                 loading: false,
                 error: action.payload
             };
+        case ClearErrors:
+            return{
+                ...state,
+                error: null,
+            };
+        case ClearMessages:
+            return{
+                ...state,
+                message: null,
+            };
         default:
             return state;
 
@@ -127,6 +157,16 @@ export const addToFavouritesReducer = (state = {}, action) => {
                 ...state,
                 loading: false,
                 error: action.payload
+            };
+        case ClearErrors:
+            return{
+                ...state,
+                error: null,
+            };
+        case ClearMessages:
+            return{
+                ...state,
+                message: null,
             };
         default:
             return state;
