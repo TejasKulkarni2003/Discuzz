@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers, legacy_createStore as createStore } f
 import thunk from "redux-thunk"
 import{ composeWithDevTools} from "redux-devtools-extension"
 import { getAllPostsReducer, userProfileReducer, userReducer } from "./Reducers/userReducer";
-import { addToFavouritesReducer, commentReducer, createPostReducer, likeReducer } from "./Reducers/postReducer";
+import { addToFavouritesReducer, commentReducer, createPostReducer, getPostsReducer, likeReducer } from "./Reducers/postReducer";
 
 
 const reducer = combineReducers({
@@ -13,6 +13,7 @@ const reducer = combineReducers({
     comment: commentReducer,
     createPost: createPostReducer,
     addToFav: addToFavouritesReducer,
+    postCategorised: getPostsReducer,
 });
 
 

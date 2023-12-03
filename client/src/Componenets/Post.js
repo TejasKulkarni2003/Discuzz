@@ -1,37 +1,61 @@
-import { BookmarkPlus, Heart, HeartCrack, MessageSquare, SendHorizonal } from 'lucide-react'
+import { MessageSquare, SendHorizonal } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import "./post.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addComment, addToFav, likePost } from '../Actions/postActions'
+import { addComment, addToFav, getPosts, likePost } from '../Actions/postActions'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { getAllPosts } from '../Actions/userActions'
+import { getAllPosts, loadUser } from '../Actions/userActions'
 import { Link } from 'react-router-dom'
+import { useAlert } from 'react-alert'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 
 const Post = (post) => {
   // console.log(post);
   const dispatch = useDispatch();
   const {user} = useSelector((state)=>state.user)
+  const {message: likemessage} = useSelector((state)=>state.like)
+  const {message: commentmessage} = useSelector((state)=>state.comment)
+  const {message: favouritesmessage} = useSelector((state)=>state.addToFav)
   const [likedornot, setlikedornot] = useState(false)
+  const [favouriteOrNot, setfavouriteOrNot] = useState(false)
   const [comment, setComment] = useState("")
 
-  const likeHandler = () => {
-    dispatch(likePost(post.post._id))
+  const alert = useAlert()
+
+  const likeHandler = async() => {
+    await dispatch(likePost(post.post._id))
+    alert.show(likemessage, {
+      type:'success'
+    })
     setlikedornot(!likedornot)
   }
 
   const addCommentHandler = async(e) => {
     e.preventDefault()
     await dispatch(addComment(post.post._id, comment))
+    alert.show(commentmessage, {
+      type:'success'
+    })
     dispatch(getAllPosts())
+    dispatch(getPosts(""))
+
   }
 
   const addBookmark = () => {
     dispatch(addToFav(post.post._id))
+    setfavouriteOrNot(!favouriteOrNot)
+    alert.show(favouritesmessage, {
+      type:'success'
+    })
+    dispatch(loadUser())
   }
 
   const [open, setOpen] = useState(false);
@@ -54,8 +78,16 @@ const Post = (post) => {
   }, [open]);
   
   useEffect(() => {
-    if(post.post.likes.includes(user._id)){
+    if(post.post.likes.includes(user)){
       setlikedornot(true)
+    }
+    for (let i = 0; i < post.post.likes.length; i++) {
+      if(post.post.likes[i]._id === user._id){
+        setlikedornot(true)
+      }
+    }
+    if(user.favouritePosts.includes(post.post._id)){
+      setfavouriteOrNot(true)
     }
   }, [dispatch])
 
@@ -66,11 +98,11 @@ const Post = (post) => {
         <p>{post.post.content}</p>
         <div>
           <div>
-            <button onClick={likeHandler}>{likedornot ? <HeartCrack/> : <Heart/>}</button>
+            <button onClick={likeHandler}>{likedornot ? (<FavoriteIcon style={{"color": "red"}}/>) : (<FavoriteBorderIcon/>)}</button>
             <button onClick={handleClickOpen}><MessageSquare/></button>
           </div>
           <div>
-            <button onClick={addBookmark} ><BookmarkPlus/></button>
+            <button onClick={addBookmark} >{favouriteOrNot? <BookmarkAddedIcon style={{"color": "#423F8F"}}/>:<BookmarkAddIcon/>}</button>
           </div>
           
         </div>

@@ -1,5 +1,6 @@
 import { Book, Mail, Subtitles } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { createPost } from '../Actions/postActions'
@@ -9,22 +10,26 @@ import "./Login.css"
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const alert = useAlert()
+
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
     const [category, setCategory] = useState("Technology")
 
-    const {message} = useSelector((state)=>state.createPost)
+    const {loading, message} = useSelector((state)=>state.createPost)
 
     const createPostHandler = async(e) =>{
         e.preventDefault()
 
         await dispatch(createPost(title, content, category))
-
-        console.log(message);
-
-        if(message === "Post Uploaded Successfully"){
-            navigate("/")
+        navigate("/")
+        if(loading === false){
+            alert.show(message, {
+                type:'success'
+            })
         }
+        
+
     }
 
 
@@ -60,13 +65,13 @@ const Login = () => {
                         value={category}
                         onChange={(e) => setCategory(e.target.value) }
                     >
-                        <option value="Technology">Technology</option>
-                        <option value="Sports">Sports</option>
-                        <option value="Politics">Politics</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Education">Education</option>
-                        <option value="Economics">Economics</option>
-                        <option value="Health">Health</option>
+                        <option value="technology">Technology</option>
+                        <option value="sports">Sports</option>
+                        <option value="politics">Politics</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="education">Education</option>
+                        <option value="economics">Economics</option>
+                        <option value="health">Health</option>
                     </select>
                 </div>
 

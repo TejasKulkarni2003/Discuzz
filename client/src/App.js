@@ -1,6 +1,7 @@
 import './App.css';
 import Navbar from "./Componenets/Navbar.js"
 import Home from "./Componenets/Home.js"
+import PostsByCategory from "./Componenets/PostsByCategory.js"
 import Login from "./Componenets/Login.js"
 import Register from "./Componenets/Register.js"
 import ChangePassword from "./Componenets/ChangePassword.js"
@@ -20,7 +21,6 @@ function App() {
 
   
   const { isAuthenticated } = useSelector((state) => state.user);
-  // console.log(isAuthenticated);
 
   return (
     <>
@@ -29,6 +29,7 @@ function App() {
         <Routes>
 
           <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
+          <Route path="/posts/:category" element={isAuthenticated ? <PostsByCategory /> : <Login />} />
           <Route path="/login" element={isAuthenticated ? <Home /> :<Login />} />
           <Route path="/register" element={isAuthenticated ? <Home /> : <Register />} />
           <Route path="/resetpassword" element={<ChangePassword />} />

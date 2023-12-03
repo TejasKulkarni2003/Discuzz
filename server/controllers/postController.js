@@ -18,6 +18,8 @@ exports.createPost = asyncError (async(req, res, next) => {
             creator: req.user._id,
         }
 
+        // console.log(newPostData);
+
         const newPost = await Post.create(newPostData)
 
         const user = await User.findById(req.user._id)
@@ -36,6 +38,16 @@ exports.createPost = asyncError (async(req, res, next) => {
 exports.getPosts = asyncError ( async(req, res, next) => {
     try {
         const posts = await Post.find().populate("creator likes comments.user");
+        res.status(200).json({success: true, posts})
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    }
+})
+
+exports.getPostsByCategory = asyncError ( async(req, res, next) => {
+    try {
+        const {category} = req.params
+        const posts = await Post.find({category: category}).populate("creator likes comments.user");
         res.status(200).json({success: true, posts})
     } catch (error) {
         res.status(500).json({success: false, message: error.message})

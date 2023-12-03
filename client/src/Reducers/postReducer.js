@@ -25,6 +25,9 @@ import { ADD_TO_FAVOURITES_FAIL, ADD_TO_FAVOURITES_REQUEST, ADD_TO_FAVOURITES_SU
          CREATE_POST_FAIL,
          CREATE_POST_REQUEST,
          CREATE_POST_SUCCESS,
+         GET_POSTS_FAIL,
+         GET_POSTS_REQUEST,
+         GET_POSTS_SUCCESS,
          LIKE_FAIL, LIKE_REQUEST, LIKE_SUCCESS } from "../Constants/postConstants"
 
 export const likeReducer = (state = {}, action) => {
@@ -124,6 +127,32 @@ export const addToFavouritesReducer = (state = {}, action) => {
                 ...state,
                 loading: false,
                 error: action.payload
+            };
+        default:
+            return state;
+
+    }
+}
+
+export const getPostsReducer = (state = {}, action) => {
+    switch(action.type){
+        case GET_POSTS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+
+        case GET_POSTS_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                posts: action.payload,
+            };
+        case GET_POSTS_FAIL:
+            return{
+                ...state,
+                loading: false,
+                error: action.payload,
             };
         default:
             return state;

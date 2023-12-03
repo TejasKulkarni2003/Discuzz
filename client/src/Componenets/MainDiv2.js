@@ -2,12 +2,10 @@ import React, { useEffect }  from 'react'
 import "./MainDiv.css"
 import Post from "./Post.js"
 import {useDispatch, useSelector} from "react-redux"
-import { getAllPosts } from '../Actions/userActions'
 
 const MainDiv = () => {
     const dispatch = useDispatch();
-    const {loading, posts} = useSelector((state)=>state.allPosts)
-
+    const {loading, posts} = useSelector((state)=>state.postCategorised) 
 
   return (
     <>
