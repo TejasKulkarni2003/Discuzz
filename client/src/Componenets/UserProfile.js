@@ -1,5 +1,5 @@
 import { UserCircle2 } from 'lucide-react';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./UserProfile.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
@@ -8,14 +8,16 @@ import Post from './Post';
 
 const UserProfile = () => {
     const {id} = useParams();
-    // console.log(id);
     const dispatch = useDispatch()
+    const [current, setcurrent] = useState('posts')
+    console.log(current);
 
     useEffect(() => {
         dispatch(loadSingleUser(id))
     }, [])
 
     const {loading, userProfile, error} = useSelector((state)=>state.userProfile)
+    const {user} = useSelector((state)=>state.user)
     
     const logoutHandler = () => {
         dispatch(logout())
@@ -38,9 +40,10 @@ const UserProfile = () => {
                         <h3>Email: {userProfile.email}</h3>
                         <h3>Number: {userProfile.mobile}</h3>
                         <h3>Gender: {userProfile.gender}</h3>
+                        
                     </div>
                 </div>
-                <div className='postdiv'>
+                { current==='posts'  && <div className='postdiv'>
                     
                             
                     <div className='subdiv' key={id}>
@@ -59,7 +62,8 @@ const UserProfile = () => {
                     }
                     </div>
                 
-                </div>
+                </div>}
+                
                 </div>
             </>
         )

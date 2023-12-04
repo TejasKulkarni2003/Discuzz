@@ -1,5 +1,5 @@
 import { UserCircle2 } from 'lucide-react';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./UserProfile.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
@@ -11,6 +11,7 @@ const Profile = () => {
     const id = user._id
     // console.log(id);
     const dispatch = useDispatch()
+    const [current, setcurrent] = useState('posts')
 
     useEffect(() => {
         dispatch(loadSingleUser(id))
@@ -39,10 +40,14 @@ const Profile = () => {
                         <h3>Email: {userProfile.email}</h3>
                         <h3>Number: {userProfile.mobile}</h3>
                         <h3>Gender: {userProfile.gender}</h3>
+                        <div className='buttons'>
                         <button className='loginBtn' onClick={logoutHandler}>Logout</button>
+                        {current==='favourites'  &&  <button className='loginBtn' onClick={() => setcurrent('posts')} >Posts</button>}
+                        {current==='posts'  &&  <button className='loginBtn' onClick={() => setcurrent('favourites')} >Favourites</button>}
+                        </div>
                     </div>
                 </div>
-                <div className='postdiv'>
+                { current==='posts'  && <div className='postdiv'>
                     
                             
                     <div className='subdiv' key={id}>
@@ -61,7 +66,27 @@ const Profile = () => {
                     }
                     </div>
                 
-                </div>
+                </div>}
+                {current==='favourites'  && <div className='postdiv'>
+                    
+                            
+                    <div className='subdiv' key={id}>
+                    {
+                        userProfile.favouritePosts  && userProfile.favouritePosts.length === 0 ? <h2>No Favourite Posts</h2> :
+                        <>
+                        <h2 className='subHeading'>Favourite Posts</h2>
+                       { userProfile.favouritePosts.map((item, id)=>
+                            
+                            <div className='subdiv' key={id}>
+                                <Post post={item}/>
+                            </div>
+                        )}
+                        </>
+                        
+                    }
+                    </div>
+                
+                </div>}
                 </div>
             </>
         )

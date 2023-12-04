@@ -14,7 +14,7 @@ const Login = () => {
 
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
-    const [category, setCategory] = useState("Technology")
+    const [category, setCategory] = useState("technology")
 
     const {loading, message} = useSelector((state)=>state.createPost)
 

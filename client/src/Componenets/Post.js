@@ -1,8 +1,8 @@
-import { MessageSquare, SendHorizonal } from 'lucide-react'
+import { MessageSquare, SendHorizonal, Trash2 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import "./post.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addComment, addToFav, getPosts, likePost } from '../Actions/postActions'
+import { addComment, addToFav, deletePost, getPosts, likePost } from '../Actions/postActions'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -51,6 +51,13 @@ const Post = (post) => {
     dispatch(loadUser())
   }
 
+  const deletePostHandler = async() => {
+    await dispatch(deletePost(post.post._id))
+    dispatch(getAllPosts())
+    dispatch(getPosts(""))
+    dispatch(loadSingleUser(post.post.creator._id))
+  }
+
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -87,15 +94,23 @@ const Post = (post) => {
 
   return (
     <div className='post'>
+        <p className='category'>{post.post.category}</p>
         <Link to={`/user/${post.post.creator._id}`} style={{ textDecoration: 'none' }}><h3>{post.post.creator.firstname}</h3></Link>
         <h3>{post.post.title}</h3>
         <p>{post.post.content}</p>
         <div>
           <div>
-            <button onClick={likeHandler}>{likedornot ? (<FavoriteIcon style={{"color": "red"}}/>) : (<FavoriteBorderIcon/>)}</button>
-            <button onClick={handleClickOpen}><MessageSquare/></button>
+            <div>
+              <button onClick={likeHandler}>{likedornot ? (<FavoriteIcon style={{"color": "red"}}/>) : (<FavoriteBorderIcon/>)}</button>
+              <span>{post.post.likes.length} Likes</span>
+            </div>
+            <div>
+              <button onClick={handleClickOpen}><MessageSquare/></button>
+              <span>{post.post.comments.length} Comments</span>
+            </div>
           </div>
           <div>
+            <button onClick={deletePostHandler} >{user._id === post.post.creator._id ? <Trash2/> : null}</button>
             <button onClick={addBookmark} >{favouriteOrNot? <BookmarkAddedIcon style={{"color": "#423F8F"}}/>:<BookmarkAddIcon/>}</button>
           </div>
           

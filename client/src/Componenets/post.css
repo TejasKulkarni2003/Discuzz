@@ -10,6 +10,22 @@
     display: flex;
     justify-content: space-between;
 }
+
+.post > div >div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.post > div >div >div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.5rem;
+}
+
+span{
+    font-size: 0.8rem;
+}
 button{
     padding: 1rem;
     background: none;
@@ -18,6 +34,16 @@ button{
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+
+.category{
+    /* padding: 1rem; */
+    border-radius: 1rem;
+    font-size: 0.7rem;
+    color: #423F8F;
+    /* width: fit-content; */
+    text-align: right;
+    line-height: 0;
 }
 
 .commentBox{

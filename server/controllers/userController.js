@@ -139,7 +139,7 @@ exports.getSingleuser = asyncError(async(req,res)=>{
     try {
         const {id} = req.params;
 
-        const singleUserData = await User.findOne({_id:id}).populate({path:'posts', populate: {path: 'likes creator comments comments.user'}});
+        const singleUserData = await User.findOne({_id:id}).populate({path:'posts favouritePosts', populate: {path: 'likes creator comments comments.user'}});
         res.status(200).json(singleUserData);
     } catch (error) {
         res.status(501).json({ error: error });

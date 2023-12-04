@@ -1,6 +1,9 @@
 import axios from "axios"
 import { ADD_TO_FAVOURITES_FAIL, ADD_TO_FAVOURITES_REQUEST, ADD_TO_FAVOURITES_SUCCESS, ClearErrors, ClearMessages, COMMENT_FAIL, COMMENT_REQUEST, COMMENT_SUCCESS,
      CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS,
+     DELETE_POST_FAIL,
+     DELETE_POST_REQUEST,
+     DELETE_POST_SUCCESS,
      GET_POSTS_FAIL,
      GET_POSTS_REQUEST,
      GET_POSTS_SUCCESS,
@@ -18,6 +21,23 @@ export const likePost = (id) => async(dispatch) => {
     } catch (error) {
         dispatch({
             type: LIKE_FAIL,
+            payload: error.response.data.message,
+        })
+    }
+}
+
+export const deletePost = (id) => async(dispatch) => {
+    try {
+        dispatch({type: DELETE_POST_REQUEST})
+        const {data} = await axios.delete(`/api/v1/post/${id}`)
+
+        dispatch({
+            type: DELETE_POST_SUCCESS,
+            payload: data.message,
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_POST_FAIL,
             payload: error.response.data.message,
         })
     }
