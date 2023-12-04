@@ -12,4 +12,15 @@
     margin: auto;
 }
 
+@media screen and (max-width: 800px) {
+    .mainDiv{
+        /* border: 2px solid; */
+        margin-top: 8vh;
+        margin-left: 10vw;
+        width: 98vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
 

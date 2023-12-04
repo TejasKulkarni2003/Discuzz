@@ -80,3 +80,27 @@ button{
     color: black;
     font-style: bold;
 }
+
+@media screen and (max-width: 800px) {
+    .post{
+        color: black;
+        width: 50vw;
+        border: 1px solid #423F8F;
+        height: fit-content;
+        margin: 1rem 0rem;
+        padding: 0.5rem 2rem;
+        font-size: 0.8rem;
+    }
+    span{
+        font-size: 0.6rem;
+    }
+    .category{
+        /* padding: 1rem; */
+        border-radius: 1rem;
+        font-size: 1rem;
+        color: #423F8F;
+        /* width: fit-content; */
+        text-align: right;
+        line-height: 0;
+    }
+}

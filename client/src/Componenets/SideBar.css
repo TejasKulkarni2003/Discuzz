@@ -17,8 +17,8 @@
 }
 
 .svg2{
-    width: 1.7rem;
-    height: 1.7rem;
+    width: 4vw;
+    height: 4vw;
     color: #000;
 }
 
@@ -30,4 +30,18 @@ p{
 
 .categories:hover{
     transform: scale(1.05);
+}
+
+@media screen and (max-width: 800px) {
+    p{
+        display: none;
+    }
+    .sidebar{
+        position: fixed;
+        margin-top: 8vh;
+        z-index: 4;
+        width: 10vw;
+        background-color: #A5A3D2;
+        height: 100%;
+    }
 }
