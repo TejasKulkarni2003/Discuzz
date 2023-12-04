@@ -1,4 +1,5 @@
 const User = require("../models/userSchema");
+const Post = require("../models/postSchema")
 const asyncError = require("../middleware/asyncError");
 const sendToken = require("../utils/sendJWTToken");
 
@@ -112,12 +113,12 @@ exports.getAllUsers = asyncError(async(req,res)=>{
             query.gender = gender
         }
         const skip = (page - 1) *ITEM_PER_PAGE  
-        const count = await User.countDocuments(query); 
+        const count = await User.countDocuments(query).populate({path: "posts"}); 
 
         const usersData = await User.find()
-        .sort({datecreated:sort == "new" ? -1 :1})
-        .limit(ITEM_PER_PAGE)
-        .skip(skip)   
+        // .sort({datecreated:sort == "new" ? -1 :1})
+        // .limit(ITEM_PER_PAGE)
+        // .skip(skip)   
 
         const pageCount = Math.ceil(count/ITEM_PER_PAGE);  
 
@@ -150,13 +151,26 @@ exports.getSingleuser = asyncError(async(req,res)=>{
 
 // delete user
 exports.deleteuser = asyncError(async(req,res)=>{
-    const {id} = req.params;
+    try {
+        const {id} = req.params;
 
-    const deleteUserData = await User.findByIdAndDelete({_id:id});
-    res.status(200).json({
-        success : true,
-        deleteUserData
-    });
+        const currentUser = await User.findById(req.user._id)
+        if(currentUser.role !== "Admin"  &&  currentUser._id !== id){
+            res.status(401).json({ succcess:false, message: "Not Authorized" });
+        }
+
+        await User.findByIdAndDelete(id);
+        await Post.deleteMany({creator: id})
+
+        res.status(200).json({
+            success : true,
+            message: "User Deleted Successfully",
+        });
+
+    } catch (error) {
+        res.status(501).json({succcess:false, message: error.message });
+    }
+    
     
 })
 

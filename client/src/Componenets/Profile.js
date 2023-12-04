@@ -2,15 +2,15 @@ import { UserCircle2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import "./UserProfile.css"
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { loadSingleUser, logout } from '../Actions/userActions';
 import Post from './Post';
 
 const Profile = () => {
     const {user} = useSelector((state)=>state.user)
     const id = user._id
-    // console.log(id);
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [current, setcurrent] = useState('posts')
 
     useEffect(() => {
@@ -40,6 +40,7 @@ const Profile = () => {
                         <h3>Email: {userProfile.email}</h3>
                         <h3>Number: {userProfile.mobile}</h3>
                         <h3>Gender: {userProfile.gender}</h3>
+                        {user.role==="Admin" &&  <button className='loginBtn' onClick={()=>navigate("/dashboard")} >Dashboard</button>}
                         <div className='buttons'>
                         <button className='loginBtn' onClick={logoutHandler}>Logout</button>
                         {current==='favourites'  &&  <button className='loginBtn' onClick={() => setcurrent('posts')} >Posts</button>}

@@ -100,6 +100,7 @@
 // })
 
 
+import { ClearMessages } from "../Constants/postConstants";
 import {USER_LOGIN_REQUEST, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS,
     USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST,
     LOAD_SUCCESS, LOAD_FAIL, LOAD_REQUEST,
@@ -112,7 +113,13 @@ import {USER_LOGIN_REQUEST, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS,
     GET_ALL_POST_FAIL,
     USER_PROFILE_SUCCESS,
     USER_PROFILE_REQUEST,
-    USER_PROFILE_FAIL} from "../Constants/userConstants"
+    USER_PROFILE_FAIL,
+    ALL_USERS_REQUEST,
+    ALL_USERS_SUCCESS,
+    ALL_USERS_FAIL,
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL} from "../Constants/userConstants"
 
 export const userReducer = (state = {user: {}}, action) => {
     switch(action.type){
@@ -230,3 +237,66 @@ export const userProfileReducer = (state = {}, action) => {
 
     }
 }
+
+export const allUsersReducer = (state = {}, action) => {
+    switch(action.type){
+        case ALL_USERS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+
+        case ALL_USERS_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                users: action.payload,
+            };
+        case ALL_USERS_FAIL:
+            return{
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        default:
+            return state;
+
+    }
+}
+
+export const deleteUserReducer = (state = {}, action) => {
+    switch(action.type){
+        case DELETE_USER_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+
+        case DELETE_USER_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                message: action.payload,
+            };
+        case DELETE_USER_FAIL:
+            return{
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        case ClearErrors:
+            return{
+                ...state,
+                error: null,
+            };
+        case ClearMessages:
+            return{
+                ...state,
+                message: null,
+            };
+        default:
+            return state;
+
+    }
+}
+

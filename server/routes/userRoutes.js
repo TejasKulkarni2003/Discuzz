@@ -13,7 +13,7 @@ router.route("/user/getallusers").get(getAllUsers);
 router.route("/user/details/:id").get(getSingleuser);
 
 // delete route
-router.route("/user/deleteuser/:id").delete(deleteuser);
+router.route("/user/deleteuser/:id").delete(isAuthenticatedUser, deleteuser);
 
 // update route
 router.route("/user/updateuser/:id").put( updateUser);

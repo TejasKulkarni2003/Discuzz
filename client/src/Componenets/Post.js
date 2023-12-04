@@ -110,7 +110,7 @@ const Post = (post) => {
             </div>
           </div>
           <div>
-            <button onClick={deletePostHandler} >{user._id === post.post.creator._id ? <Trash2/> : null}</button>
+            <button onClick={deletePostHandler} >{user._id === post.post.creator._id  ||  user.role==="Admin" ? <Trash2/> : null}</button>
             <button onClick={addBookmark} >{favouriteOrNot? <BookmarkAddedIcon style={{"color": "#423F8F"}}/>:<BookmarkAddIcon/>}</button>
           </div>
           

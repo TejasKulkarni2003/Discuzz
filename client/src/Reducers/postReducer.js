@@ -25,6 +25,9 @@ import { ADD_TO_FAVOURITES_FAIL, ADD_TO_FAVOURITES_REQUEST, ADD_TO_FAVOURITES_SU
          CREATE_POST_FAIL,
          CREATE_POST_REQUEST,
          CREATE_POST_SUCCESS,
+         DELETE_POST_FAIL,
+         DELETE_POST_REQUEST,
+         DELETE_POST_SUCCESS,
          GET_POSTS_FAIL,
          GET_POSTS_REQUEST,
          GET_POSTS_SUCCESS,
@@ -193,6 +196,42 @@ export const getPostsReducer = (state = {}, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
+            };
+        default:
+            return state;
+
+    }
+}
+
+export const deleteReducer = (state = {}, action) => {
+    switch(action.type){
+        case DELETE_POST_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+
+        case DELETE_POST_SUCCESS:
+            return{
+                ...state,
+                loading : false,
+                message : action.payload,
+            };
+        case DELETE_POST_FAIL:
+            return{
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+        case ClearErrors:
+            return{
+                ...state,
+                error: null,
+            };
+        case ClearMessages:
+            return{
+                ...state,
+                message: null,
             };
         default:
             return state;

@@ -1,8 +1,8 @@
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from "redux";
 import thunk from "redux-thunk"
 import{ composeWithDevTools} from "redux-devtools-extension"
-import { getAllPostsReducer, userProfileReducer, userReducer } from "./Reducers/userReducer";
-import { addToFavouritesReducer, commentReducer, createPostReducer, getPostsReducer, likeReducer } from "./Reducers/postReducer";
+import { allUsersReducer, deleteUserReducer, getAllPostsReducer, userProfileReducer, userReducer } from "./Reducers/userReducer";
+import { addToFavouritesReducer, commentReducer, createPostReducer, deleteReducer, getPostsReducer, likeReducer } from "./Reducers/postReducer";
 
 
 const reducer = combineReducers({
@@ -14,6 +14,9 @@ const reducer = combineReducers({
     createPost: createPostReducer,
     addToFav: addToFavouritesReducer,
     postCategorised: getPostsReducer,
+    allUsers: allUsersReducer,
+    deletePost: deleteReducer,
+    deleteUser: deleteUserReducer
 });
 
 

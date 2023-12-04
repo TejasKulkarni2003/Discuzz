@@ -7,6 +7,7 @@ import Search from "./Componenets/Search.js"
 import Register from "./Componenets/Register.js"
 import ChangePassword from "./Componenets/ChangePassword.js"
 import CreatePost from "./Componenets/CreatePost.js"
+import Dashboard from "./Componenets/Dashboard.js"
 import UserProfile from "./Componenets/UserProfile.js"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
@@ -16,6 +17,7 @@ import Profile from './Componenets/Profile.js';
 
 function App() {
   const dispatch = useDispatch();
+  const {user} = useSelector((state)=>state.user)
   useEffect(() => {
     dispatch(loadUser());
     dispatch(getAllPosts())
@@ -39,6 +41,7 @@ function App() {
           <Route path="/me" element={isAuthenticated ? <Profile /> : <Login/>} />
           <Route path="/search" element={isAuthenticated ? <Search /> : <Login/>} />
           <Route path="/create" element={isAuthenticated ? <CreatePost /> : <Login/>} />
+          <Route path="/dashboard" element={isAuthenticated  &&  user.role==="Admin" ? <Dashboard /> : <Login/>} />
 
         </Routes>
 

@@ -9,6 +9,13 @@ import {USER_LOGIN_REQUEST, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS,
   USER_PROFILE_REQUEST,
   USER_PROFILE_SUCCESS,
   USER_PROFILE_FAIL,
+  ALL_USERS_REQUEST,
+  ALL_USERS_SUCCESS,
+  ALL_USERS_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
+  ClearMessages,
   } from "../Constants/userConstants"
 import axios from "axios";
 
@@ -97,24 +104,6 @@ export const getAllPosts = (keyword="") => async(dispatch) => {
     }
 }
 
-export const getAllUsers = () => async(dispatch) => {
-    try {
-        dispatch({type: "getAllUsersRequest"})
-
-        const {data} = await axios.get("/api/v1/user/getallusers")
-
-        dispatch({
-            type: "getAllUsersSuccess",
-            payload: data.usersData,
-        })
-    } catch (error) {
-        dispatch({
-            type: "getAllUsersFail",
-            payload: error.response.data.message,
-        })
-    }
-}
-
 export const registerUser = (userData) => async (dispatch) => {
   try {
     dispatch({
@@ -156,6 +145,53 @@ export const logout = () => async(dispatch) => {
   }
 }
 
+export const getAllUsers = () => async(dispatch) => {
+  try {
+      dispatch({type: ALL_USERS_REQUEST})
+
+      const {data} = await axios.get(`/api/v1/user/getallusers`)
+      // console.log(data);
+      dispatch({
+          type: ALL_USERS_SUCCESS,
+          payload: data.usersData,
+      })
+  } catch (error) {
+      dispatch({
+          type: ALL_USERS_FAIL,
+          payload: error.response.data.message,
+      })
+  }
+}
+
+export const deleteUser = (id) => async(dispatch) => {
+  try {
+      dispatch({type: DELETE_USER_REQUEST})
+      console.log(id);
+      const {data} = await axios.delete(`/api/v1/user/deleteuser/${id}`)
+      console.log(data);
+      dispatch({
+          type: DELETE_USER_SUCCESS,
+          payload: data.message,
+      })
+  } catch (error) {
+      dispatch({
+          type: DELETE_USER_FAIL,
+          payload: error.response.data.message,
+      })
+  }
+}
+
 export const clearErrors = () => async (dispatch) => {
+  dispatch({type: ClearErrors})
+}
+export const clearMessages = () => async (dispatch) => {
+  dispatch({type: ClearMessages})
+}
+
+export const clearMessagesU = () => async (dispatch) => {
+  dispatch({type: ClearMessages})
+}
+
+export const clearErrorsU = () => async (dispatch) => {
   dispatch({type: ClearErrors})
 }

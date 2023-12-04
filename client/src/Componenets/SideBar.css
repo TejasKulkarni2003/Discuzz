@@ -17,8 +17,8 @@
 }
 
 .svg2{
-    width: 4vw;
-    height: 4vw;
+    width: 1.7rem;
+    height: 1.7rem;
     color: #000;
 }
 
@@ -33,7 +33,7 @@ p{
 }
 
 @media screen and (max-width: 800px) {
-    p{
+    .links{
         display: none;
     }
     .sidebar{

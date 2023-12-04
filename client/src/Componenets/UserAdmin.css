@@ -1,0 +1,11 @@
+.user{
+    color: black;
+    width: 30vw;
+    border: 1px solid #423F8F;
+    height: fit-content;
+    margin: 1rem auto;
+    padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
