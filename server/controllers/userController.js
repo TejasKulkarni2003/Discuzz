@@ -162,6 +162,14 @@ exports.deleteuser = asyncError(async(req,res)=>{
         await User.findByIdAndDelete(id);
         await Post.deleteMany({creator: id})
 
+        const posts = await Post.find({})
+        
+        for(var i = 0; i<posts.length; i++){
+            posts[i].comments.filter(comment => comment.user !== id)
+
+            await posts[i].save()
+        }
+
         res.status(200).json({
             success : true,
             message: "User Deleted Successfully",

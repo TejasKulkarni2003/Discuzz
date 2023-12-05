@@ -16,7 +16,6 @@ const Dashboard = () => {
     const {error: delUserErr, message: delUserMessage} = useSelector((state)=>state.deleteUser)
     const { loading:userLoading ,users} = useSelector((state)=>state.allUsers)
     useEffect(() => {
-      dispatch(getAllUsers())
       if (delPostErr) {
         alert.show(delPostErr, {
             type:'error'
@@ -45,7 +44,7 @@ const Dashboard = () => {
         dispatch(clearMessagesU());
       }
 
-    }, [dispatch, delPostErr, delMessage, delUserErr, delUserMessage])
+    }, [dispatch, delPostErr, delMessage, delUserErr, delUserMessage, alert])
   return (
     <>
       <div className='dashboard'>

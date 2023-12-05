@@ -12,7 +12,7 @@ import UserProfile from "./Componenets/UserProfile.js"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from 'react';
-import { getAllPosts, loadUser } from './Actions/userActions';
+import { getAllPosts, getAllUsers, loadUser } from './Actions/userActions';
 import Profile from './Componenets/Profile.js';
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
   useEffect(() => {
     dispatch(loadUser());
     dispatch(getAllPosts())
+    dispatch(getAllUsers())
   }, [dispatch]);
 
   

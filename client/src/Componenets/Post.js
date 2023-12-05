@@ -20,6 +20,7 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 const Post = (post) => {
   // console.log(post);
   const dispatch = useDispatch();
+  const deletedUser = "Deleted User"
   const {user} = useSelector((state)=>state.user)
   
   const [likedornot, setlikedornot] = useState(false)
@@ -140,12 +141,11 @@ const Post = (post) => {
             {post.post.comments.map((item, id)=>(
               <div className='commentDiv' key={id}>
                 <div className='commentUser'>
-                  {item.user.firstname}
+                  {item.user ? item.user.firstname : deletedUser}
                 </div>
                 <div className='commentData'>
                   {item.comment}
                 </div>
-                
               </div>
             ))}
             

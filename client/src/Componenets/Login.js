@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { clearErrors, loginUser } from '../Actions/userActions'
+import { clearErrors, loadUser, loginUser } from '../Actions/userActions'
 import "./Login.css"
 
 const Login = () => {
@@ -18,6 +18,7 @@ const Login = () => {
     const loginFormHandler = (e) =>{
         e.preventDefault()
         dispatch(loginUser(email, password))
+        dispatch(loadUser())
     }
 
     const newUSerHandler = () =>{

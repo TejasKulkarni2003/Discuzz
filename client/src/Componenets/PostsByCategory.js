@@ -22,7 +22,7 @@ const PostsByCategory = () => {
   return (
     <>
     {
-      loading===true ? (<div className='loader'></div>): (
+      loading ? (<div className='loader'></div>): (
         <div className='containerMain'>
             <SideBar/>
             <MainDiv2 category={category}/>

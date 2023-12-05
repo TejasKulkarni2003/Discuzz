@@ -35,17 +35,24 @@ const Search = () => {
               <button className='sendBtn' type='submit' ><SendHorizonal /></button>
             </div>
           </form>
-          <div>
           {
-                posts  &&
-                posts.map((item, id)=>
-                    
-                    <div className='subdiv' key={id}>
-                        <Post post={item}/>
-                    </div>
-                )
-            }
-          </div>
+            loading ? <div className='loader'></div> : (
+              <>
+              <div>
+              {
+                    posts  &&
+                    posts.map((item, id)=>
+                        
+                        <div className='subdiv' key={id}>
+                            <Post post={item}/>
+                        </div>
+                    )
+                }
+              </div>
+              </>
+            )
+          }
+          
         </div>
         </div>
             
